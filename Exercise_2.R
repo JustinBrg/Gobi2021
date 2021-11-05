@@ -1,9 +1,5 @@
 library(ggplot2)
-library(gtools)
-library(stringr)
-library(factoextra)
-library(ggfortify)
-library(cluster)
+library("DESeq2")
 #Read data
 zika_table <-read.table(header = FALSE,"Zika.tabular")
 count_matrix = zika_table
@@ -91,14 +87,10 @@ ggplot(data = pca.data , aes(x = X, y =Y, label = Sample))+
 
 #task 5 DESeq2
 
-
-library("DESeq2")
 new_count_matrix <- count_matrix
 head(new_count_matrix)
 
 #new_count_matrix[1] <- NULL 
-
-
 
 length(new_count_matrix)
 
@@ -113,17 +105,11 @@ new_count_matrix <- new_count_matrix[row_sub,]
 head(new_count_matrix)
 head(count_matrix)
 
-
 expDesign <- data.frame(samples = c("SRR3191542.fastq","SRR3191543.fastq","SRR3191544.fastq","SRR3191545.fastq"), treatment = c("Mock","Mock","Zika","Zika"))
 
 
 print(expDesign)
-#???
-head(new_count_matrix)
 
-
-
-head(expDesign)
 
 dds <-DESeqDataSetFromMatrix( new_count_matrix,
                                  colData = expDesign,
@@ -133,6 +119,7 @@ dds <- DESeq(dds)
 
 resultsNames(dds) # lists the coefficients
 res <- results(dds, name="treatment_Zika_vs_Mock")
+
 # or to shrink log fold changes association with condition:
 #res <- lfcShrink(dds, coef="treatment_Zika_vs_Mock", type="apeglm")
 
