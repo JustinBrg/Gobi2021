@@ -5,7 +5,7 @@ library(factoextra)
 library(ggfortify)
 library(cluster)
 #Read data
-zika_table <-read.table(header = FALSE,"D:\\Study thingie\\FACH\\S5 WS2021\\GOBI\\RNAseq\\Zika.tabular")
+zika_table <-read.table(header = FALSE,"Zika.tabular")
 count_matrix = zika_table
 count_matrix = count_matrix[-1,]
 #count_matrix[1] <- NULL
